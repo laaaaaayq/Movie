@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+table, th, td {
+  border:2px solid black;
+  border-collapse:collapse;
+  height:50px;
+  width:800px;
+}
+    </style>
+    <meta charset="UTF-8">
+    <title>Movie</title>
+</head>
+<body>
+<center><form action="{% url 'favorites' %}" method="post">
+    {% csrf_token %}
+    <button name="fav" type="submit">My favorites</button>
+</form><br><br>
+<div class="container">
+		 <form action="search" method="get">
+			 {% csrf_token %}
+                <input type="text"
+                       placeholder=" Search Title"
+                       name="search">
+                <button>search</button>
+            </form>
+</div><br><br>
+<table>
+  <thead>
+  <tr>
+  <th>Movie Name</th>
+  <th>Description</th>
+  <th>Poster</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% if movie %}
+    {% for i in movie %}
+      <tr align="center">
+    <td>{{i.title}}</td>
+    <td>{{i.description}}</td>
+    <td><img style="width:100px; height:100px;" src="{{i.image.url}}" alt=""></td>
+  </tr>
+    {% endfor %}
+  {% elif data %}
+   {% for i in data %}
+  <tr align="center">
+    <td>{{i.title}}</td>
+    <td>{{i.description}}</td>
+      <td><a href="Movie/{{i.id}}"><img style="width:150px; height:150px;" src="{{i.image.url}}" alt=""></a></td>
+  </tr>
+  {% endfor %}
+  {% endif %}
+  </tbody>
+</table>
+</center>
+
+
+</body>
+</html>
